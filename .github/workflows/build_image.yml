@@ -8,17 +8,17 @@ on:
 
 jobs:
   Build_Docker:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Build da imagem
-      uses: docker build -t fastapi
-
-    - name: Executar o container
-      uses: docker run -p 8000:8000 --rm fastapi
-    
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+  
+      - name: Build da imagem
+        uses: docker build -t fastapi
+  
+      - name: Executar o container
+        uses: docker run -p 8000:8000 --rm fastapi
+      
 
 
 
