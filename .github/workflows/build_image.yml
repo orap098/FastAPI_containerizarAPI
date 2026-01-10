@@ -1,0 +1,25 @@
+name: Build de imagem
+
+on:
+  workflow_dispatch
+#   push:
+#     branches:
+#       - main      
+
+jobs:
+  Build_Docker:
+  runs-on: ubuntu-leatest
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build da imagem
+      uses: docker build -t fastapi
+
+    - name: Executar o container
+      uses: docker run -p 8000:8000 --rm fastapi
+    
+
+
+
+    
