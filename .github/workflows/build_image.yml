@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        run: actions/checkout@v4
+        uses: actions/checkout@v4
   
       - name: Build da imagem
         run: docker build -t fastapi
