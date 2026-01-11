@@ -47,7 +47,7 @@ jobs:
           AWS_REGION: ${{ vars.AWS_REGION }}
           REGISTRY: ${{ vars.REGISTRY }}
           REPOSITORY: ${{ vars.REPOSITORY }}
-    I     MAGE_TAG: ${{ vars.IMAGE_TAG }}
+          IMAGE_TAG: ${{ vars.IMAGE_TAG }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
