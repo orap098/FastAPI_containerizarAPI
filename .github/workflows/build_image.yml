@@ -38,15 +38,13 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-  
-      - name: Login EC2
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 089175280184.dkr.ecr.us-east-1.amazonaws.com
-      
-      - name: Build na EC2
-        run: docker build -t repo-fastapi .
+
+      - name: Baixar imagem na EC2
+        run: docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
 
       - name: Tag image
-        run: docker tag repo-fastapi:latest 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+        run: docker run -d -p 80:80 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+
 
 
     
