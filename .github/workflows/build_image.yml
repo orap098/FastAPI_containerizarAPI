@@ -45,6 +45,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
           AWS_SESSION_TOKEN: ${{ env.AWS_SESSION_TOKEN }}
           AWS_REGION: ${{ vars.AWS_REGION }}
+          REGISTRY: ${{ vars.REGISTRY }}
+          REPOSITORY: ${{ vars.REPOSITORY }}
+    I     MAGE_TAG: ${{ vars.IMAGE_TAG }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
