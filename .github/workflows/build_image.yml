@@ -40,15 +40,19 @@ jobs:
 
       - name: Deploy EC2
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ env.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
+          envs: AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_SESSION_TOKEN,AWS_REGION
           script: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 089175280184.dkr.ecr.us-east-1.amazonaws.com
             docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
             docker run -d -p 80:80 --name fastapi-app 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
-            docker ps
-            echo "Deploy Completo"
-
+            echo "Deploy finalizado com sucesso!"
     
