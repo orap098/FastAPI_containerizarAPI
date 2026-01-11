@@ -40,10 +40,10 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Baixar imagem na EC2
-        run: docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+        run: docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi
 
       - name: Tag image
-        run: docker run -d -p 80:80 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+        run: docker run -d -p 80:80 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi
 
 
 
