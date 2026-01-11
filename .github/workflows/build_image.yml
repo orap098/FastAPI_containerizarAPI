@@ -51,10 +51,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           envs: AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_SESSION_TOKEN,AWS_REGION
           script: |
-            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 089175280184.dkr.ecr.us-east-1.amazonaws.com
-            docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REGISTRY
+            docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             docker stop fastapi-app || true
             docker rm fastapi-app || true
-            docker run -d -p 80:8000 --name fastapi-app 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+            docker run -d -p 80:8000 --name fastapi-app $REGISTRY/$REPOSITORY:$IMAGE_TAG            
             echo "Deploy finalizado com sucesso!"
     
