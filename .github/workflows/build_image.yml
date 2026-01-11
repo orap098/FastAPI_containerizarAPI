@@ -17,14 +17,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug Repo Name
+        run: echo "O nome do repo é: ${{ github.repository }}"
+
       - name: Autenticação AWS 
         uses: aws-actions/configure-aws-credentials@v4 
         with:
           role-to-assume: ${{ secrets.IAM_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
-      
-      - name: Debug Repo Name
-        run: echo "O nome do repo é: ${{ github.repository }}"
       
       - name: Login to Amazon ECR
         id: login-ecr
