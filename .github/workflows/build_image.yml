@@ -55,6 +55,6 @@ jobs:
             docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
             docker stop fastapi-app || true
             docker rm fastapi-app || true
-            docker run -d -p 80:80 --name fastapi-app 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+            docker run -d -p 80:8000 --name fastapi-app 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
             echo "Deploy finalizado com sucesso!"
     
