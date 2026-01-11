@@ -23,6 +23,9 @@ jobs:
           role-to-assume: ${{ secrets.IAM_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
       
+      - name: Debug Repo Name
+        run: echo "O nome do repo é: ${{ github.repository }}"
+      
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
