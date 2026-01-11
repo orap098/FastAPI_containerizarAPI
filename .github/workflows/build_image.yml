@@ -41,9 +41,6 @@ jobs:
       - name: Deploy EC2
         uses: appleboy/ssh-action@v1.0.3
         env:
-          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ env.AWS_SESSION_TOKEN }}
           AWS_REGION: ${{ vars.AWS_REGION }}
           REGISTRY: ${{ vars.REGISTRY }}
           REPOSITORY: ${{ vars.REPOSITORY }}
@@ -53,12 +50,14 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
           envs: AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_SESSION_TOKEN,AWS_REGION
-          script: aws ecr get-login-password --region $AWS_REGION \
-              | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+          script:  |
+            set -e 
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
             docker pull ${{ steps.login-ecr.outputs.registry }}/repo-fastapi:latest
             docker stop fastapi-app || true
             docker rm fastapi-app || true
             docker run -d \
+              --restart unless-stopped \
               -p 80:8000 \
               --name fastapi-app \
               ${{ steps.login-ecr.outputs.registry }}/repo-fastapi:latest
