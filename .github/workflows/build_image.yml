@@ -38,12 +38,17 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:latest .
           docker push $REGISTRY/$REPOSITORY:latest
 
-      - name: Baixar imagem na EC2
-        run: docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi
-
-      - name: Tag image
-        run: docker run -d -p 80:80 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi
-
-
+      - name: Deploy EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 089175280184.dkr.ecr.us-east-1.amazonaws.com
+            docker pull 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+            docker run -d -p 80:80 --name fastapi-app 089175280184.dkr.ecr.us-east-1.amazonaws.com/repo-fastapi:latest
+            docker ps
+            echo "Deploy Completo"
 
     
