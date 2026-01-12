@@ -16,9 +16,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Debug repository
-        run: echo '${{github.repository}}'
         
       - name: Autenticação AWS 
         uses: aws-actions/configure-aws-credentials@v4 
